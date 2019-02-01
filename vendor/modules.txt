@@ -1,0 +1,13 @@
+# github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
+github.com/globalsign/mgo
+github.com/globalsign/mgo/bson
+github.com/globalsign/mgo/internal/sasl
+github.com/globalsign/mgo/internal/scram
+github.com/globalsign/mgo/internal/json
+# github.com/gorilla/mux v1.7.0
+github.com/gorilla/mux
+# github.com/rs/xid v1.2.1
+github.com/rs/xid
+# golang.org/x/crypto v0.0.0-20190130090550-b01c7a725664
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
