@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/levblanc/golang-restful-api/db"
 	"github.com/levblanc/golang-restful-api/handlers"
+	"github.com/levblanc/golang-restful-api/middleware"
 )
 
 // handle CORS
@@ -47,9 +48,9 @@ func main() {
 
 	// handlers
 	router.HandleFunc("/signup", handlers.Signup).Methods("POST")
-	router.HandleFunc("/user/{id}", handlers.GetUser).Methods("GET")
 	router.HandleFunc("/login", handlers.Login).Methods("POST")
 	router.HandleFunc("/logout", handlers.Logout).Methods("POST")
+	router.Handle("/user/{id}", middleware.Auth(handlers.GetUser)).Methods("GET")
 
 	// start server
 	log.Fatal(http.ListenAndServe(":8080", &enableCORS{router}))
