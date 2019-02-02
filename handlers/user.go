@@ -89,32 +89,6 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, user)
 }
 
-// GetUser gets user info by user id
-func GetUser(w http.ResponseWriter, req *http.Request) {
-	var user models.User
-
-	params := mux.Vars(req)
-
-	id, err := xid.FromString(params["id"])
-	logger.Fatal(err)
-
-	err = db.User.Find(bson.M{"userId": id}).One(&user)
-
-	if err != nil {
-		response.SendError(
-			w,
-			http.StatusNotFound,
-			"Cannot find user!",
-		)
-		return
-	}
-
-	// empty password to omit the field in response
-	user.Password = ""
-
-	response.SendData(w, user)
-}
-
 // Login handles user login process
 // it creates cookie and user session
 func Login(w http.ResponseWriter, req *http.Request) {
@@ -228,4 +202,53 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 	}
 
 	response.SendData(w, data)
+}
+
+// GetUser gets user info by user id
+func GetUser(w http.ResponseWriter, req *http.Request) {
+	var user models.User
+
+	params := mux.Vars(req)
+
+	id, err := xid.FromString(params["id"])
+	logger.Fatal(err)
+
+	err = db.User.Find(bson.M{"userId": id}).One(&user)
+
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusNotFound,
+			"Cannot find user!",
+		)
+		return
+	}
+
+	// empty password to omit the field in response
+	user.Password = ""
+
+	response.SendData(w, user)
+}
+
+// GetAllUsers gets all user info
+func GetAllUsers(w http.ResponseWriter, req *http.Request) {
+	var userList []*models.User
+
+	err := db.User.Find(nil).Sort("-userId").All(&userList)
+
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			err.Error(),
+		)
+		return
+	}
+
+	for _, user := range userList {
+		// empty password to omit the field in response
+		user.Password = ""
+	}
+
+	response.SendData(w, userList)
 }
