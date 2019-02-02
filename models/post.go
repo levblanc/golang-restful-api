@@ -10,6 +10,8 @@ import (
 type Post struct {
 	ID           xid.ID    `json:"id" bson:"id"`
 	Content      string    `json:"content" bson:"content"`
+	Creator      string    `json:"creator" bson:"creator"`
+	CreatorID    string    `json:"creatorId" bson:"creatorId"`
 	CreatedAt    time.Time `json:"createdAt" bson:"createdAt"`
 	CreatedTime  string    `json:"createdTime" bson:"createdTime"`
 	ModifiedAt   time.Time `json:"modifiedAt" bson:"modifiedAt"`

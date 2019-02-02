@@ -52,6 +52,8 @@ func main() {
 	router.HandleFunc("/logout", handlers.Logout).Methods("POST")
 	router.Handle("/user/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetUser)).Methods("GET")
 	router.Handle("/user/all", middleware.Auth(handlers.GetAllUsers)).Methods("GET")
+	// post handlers
+	router.Handle("/post/create", middleware.Auth(handlers.CreatePost)).Methods("POST")
 
 	// start server
 	log.Fatal(http.ListenAndServe(":8080", &enableCORS{router}))
