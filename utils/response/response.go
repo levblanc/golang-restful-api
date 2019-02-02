@@ -26,5 +26,7 @@ type Error struct {
 // Send writes encoded json data to the response writer
 func Send(w http.ResponseWriter, statusCode int, data interface{}) {
 	w.WriteHeader(statusCode)
+	w.Header().Set("Content-Type", "application/json")
+
 	json.NewEncoder(w).Encode(data)
 }
