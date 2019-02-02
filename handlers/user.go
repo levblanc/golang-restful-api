@@ -12,6 +12,7 @@ import (
 	"github.com/levblanc/golang-restful-api/utils/format"
 	"github.com/levblanc/golang-restful-api/utils/logger"
 	"github.com/levblanc/golang-restful-api/utils/response"
+	"github.com/levblanc/golang-restful-api/utils/validator"
 	"github.com/rs/xid"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -22,7 +23,7 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 
 	err := req.ParseForm()
 
-	if err != nil {
+	if err != nil || !validator.ValidContentType(req) {
 		response.ReqParamError(w)
 		return
 	}
@@ -121,7 +122,7 @@ func Login(w http.ResponseWriter, req *http.Request) {
 
 	err := req.ParseForm()
 
-	if err != nil {
+	if err != nil || !validator.ValidContentType(req) {
 		response.ReqParamError(w)
 		return
 	}
