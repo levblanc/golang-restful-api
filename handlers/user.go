@@ -18,16 +18,12 @@ import (
 
 // Signup handles sign up requests
 func Signup(w http.ResponseWriter, req *http.Request) {
-	var error response.Error
 	var existUser models.User
 
 	err := req.ParseForm()
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Post method params error! One possible reason is your request Content-Type is not set to application/x-www-form-urlencoded. Set it and try again."
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.ReqParamError(w)
 		return
 	}
 
@@ -37,28 +33,31 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if user.Username == "" {
-		error.Status = response.StatusError
-		error.Message = "Username is missing!"
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Username is missing!",
+		)
 		return
 	}
 
 	err = db.User.Find(bson.M{"username": user.Username}).One(&existUser)
 
 	if existUser.Username == user.Username {
-		error.Status = response.StatusError
-		error.Message = "Username taken, try again!"
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Username taken, try again!",
+		)
 		return
 	}
 
 	if user.Password == "" {
-		error.Status = response.StatusError
-		error.Message = "Password is missing!"
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Password is missing!",
+		)
 		return
 	}
 
@@ -75,22 +74,22 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 	err = db.User.Insert(user)
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = http.StatusText(http.StatusInternalServerError)
-
-		response.Send(w, http.StatusInternalServerError, error)
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			http.StatusText(http.StatusInternalServerError),
+		)
 		return
 	}
 
 	// empty password to omit the field in response
 	user.Password = ""
 
-	response.Send(w, http.StatusOK, user)
+	response.SendData(w, user)
 }
 
 // GetUser gets user info by user id
 func GetUser(w http.ResponseWriter, req *http.Request) {
-	var error response.Error
 	var user models.User
 
 	params := mux.Vars(req)
@@ -101,32 +100,29 @@ func GetUser(w http.ResponseWriter, req *http.Request) {
 	err = db.User.Find(bson.M{"userId": id}).One(&user)
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Cannot find user!"
-
-		response.Send(w, http.StatusNotFound, error)
+		response.SendError(
+			w,
+			http.StatusNotFound,
+			"Cannot find user!",
+		)
 		return
 	}
 
 	// empty password to omit the field in response
 	user.Password = ""
 
-	response.Send(w, http.StatusOK, user)
+	response.SendData(w, user)
 }
 
 // Login handles user login process
 // it creates cookie and user session
 func Login(w http.ResponseWriter, req *http.Request) {
-	var error response.Error
 	var found models.User
 
 	err := req.ParseForm()
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Post method params error! One possible reason is your request Content-Type is not set to application/x-www-form-urlencoded. Set it and try again."
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.ReqParamError(w)
 		return
 	}
 
@@ -136,18 +132,20 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if user.Username == "" {
-		error.Status = response.StatusError
-		error.Message = "Username is missing!"
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Username is missing!",
+		)
 		return
 	}
 
 	if user.Password == "" {
-		error.Status = response.StatusError
-		error.Message = "Password is missing!"
-
-		response.Send(w, http.StatusBadRequest, error)
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Password is missing!",
+		)
 		return
 	}
 
@@ -157,10 +155,11 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	err = db.User.Find(bson.M{"username": username}).One(&found)
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "User not found!"
-
-		response.Send(w, http.StatusNotFound, error)
+		response.SendError(
+			w,
+			http.StatusNotFound,
+			"User not found!",
+		)
 		return
 	}
 
@@ -172,10 +171,11 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	)
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Password is not correct!"
-
-		response.Send(w, http.StatusUnauthorized, error)
+		response.SendError(
+			w,
+			http.StatusUnauthorized,
+			"Password is not correct!",
+		)
 		return
 	}
 
@@ -189,20 +189,20 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	err = auth.CreateSession(sid, found.Username)
 
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Failed to create user session!"
-
-		response.Send(w, http.StatusInternalServerError, error)
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			"Failed to create user session!",
+		)
 		return
 	}
 
-	response.Send(w, http.StatusOK, found)
+	response.SendData(w, found)
 }
 
 // Logout handles user logout
 // expires user cookie and session
 func Logout(w http.ResponseWriter, req *http.Request) {
-	var error response.Error
 	var data response.Success
 
 	cookie, _ := req.Cookie("mstream-session")
@@ -212,19 +212,19 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 
 	// expire session error
 	if err != nil {
-		error.Status = response.StatusError
-		error.Message = "Failed to expire user session!"
-
-		response.Send(w, http.StatusInternalServerError, error)
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			"Failed to expire user session!",
+		)
 		return
 	}
 
-	data.Status = response.StatusSuccess
 	data.Data = struct {
 		Message string `json:"message"`
 	}{
 		Message: "Logout success!",
 	}
 
-	response.Send(w, http.StatusOK, data)
+	response.SendData(w, data)
 }
