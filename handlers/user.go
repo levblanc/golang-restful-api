@@ -11,7 +11,6 @@ import (
 	"github.com/levblanc/golang-restful-api/models"
 	"github.com/levblanc/golang-restful-api/utils/auth"
 	"github.com/levblanc/golang-restful-api/utils/format"
-	"github.com/levblanc/golang-restful-api/utils/logger"
 	"github.com/levblanc/golang-restful-api/utils/response"
 	"github.com/levblanc/golang-restful-api/utils/validator"
 	"github.com/rs/xid"
@@ -64,7 +63,14 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
-	logger.Fatal(err)
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			err.Error(),
+		)
+		return
+	}
 
 	user.Password = string(hash)
 	user.UserID = xid.New()
@@ -212,7 +218,14 @@ func GetUser(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 
 	id, err := xid.FromString(params["id"])
-	logger.Fatal(err)
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Param id error!",
+		)
+		return
+	}
 
 	err = db.User.Find(bson.M{"userId": id}).One(&user)
 
