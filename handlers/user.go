@@ -185,8 +185,6 @@ func Login(w http.ResponseWriter, req *http.Request) {
 // Logout handles user logout
 // expires user cookie and session
 func Logout(w http.ResponseWriter, req *http.Request) {
-	var data response.Success
-
 	cookie, _ := req.Cookie(constants.CookieName)
 
 	auth.ExpireCookie(w)
@@ -202,7 +200,7 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	data.Data = struct {
+	data := struct {
 		Message string `json:"message"`
 	}{
 		Message: "Logout success!",
