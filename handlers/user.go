@@ -6,6 +6,7 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/mux"
+	"github.com/levblanc/golang-restful-api/constants"
 	"github.com/levblanc/golang-restful-api/db"
 	"github.com/levblanc/golang-restful-api/models"
 	"github.com/levblanc/golang-restful-api/utils/auth"
@@ -180,7 +181,7 @@ func Login(w http.ResponseWriter, req *http.Request) {
 func Logout(w http.ResponseWriter, req *http.Request) {
 	var data response.Success
 
-	cookie, _ := req.Cookie("mstream-session")
+	cookie, _ := req.Cookie(constants.CookieName)
 
 	auth.ExpireCookie(w)
 	err := auth.ExpireSession(cookie.Value)

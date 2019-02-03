@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/levblanc/golang-restful-api/constants"
 	"github.com/levblanc/golang-restful-api/db"
 	"github.com/levblanc/golang-restful-api/models"
+	"github.com/levblanc/golang-restful-api/utils/ctx"
 	"github.com/levblanc/golang-restful-api/utils/format"
 	"github.com/levblanc/golang-restful-api/utils/response"
 	"github.com/levblanc/golang-restful-api/utils/validator"
@@ -22,12 +24,12 @@ func CreatePost(w http.ResponseWriter, req *http.Request) {
 	}
 
 	t := time.Now()
+	creatorID := ctx.Get(req, constants.ContextUserID).(xid.ID)
 
 	post := models.Post{
 		ID:           xid.New(),
 		Content:      req.FormValue("content"),
-		Creator:      req.FormValue("creator"),
-		CreatorID:    req.FormValue("creatorId"),
+		CreatorID:    creatorID,
 		CreatedAt:    t,
 		CreatedTime:  format.Time(t),
 		ModifiedAt:   t,

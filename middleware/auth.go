@@ -4,8 +4,10 @@ import (
 	"net/http"
 
 	"github.com/globalsign/mgo/bson"
+	"github.com/levblanc/golang-restful-api/constants"
 	"github.com/levblanc/golang-restful-api/db"
 	"github.com/levblanc/golang-restful-api/models"
+	"github.com/levblanc/golang-restful-api/utils/ctx"
 	"github.com/levblanc/golang-restful-api/utils/response"
 )
 
@@ -16,7 +18,7 @@ func Auth(next http.HandlerFunc) http.Handler {
 		var session models.Session
 		var error response.Error
 
-		cookie, err := req.Cookie("mstream-session")
+		cookie, err := req.Cookie(constants.CookieName)
 
 		if err != nil {
 			error.Status = response.StatusError
@@ -36,6 +38,6 @@ func Auth(next http.HandlerFunc) http.Handler {
 			return
 		}
 
-		next(w, req)
+		next(w, ctx.Set(req, constants.ContextUserID, session.UserID))
 	})
 }
