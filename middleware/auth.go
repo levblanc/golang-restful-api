@@ -5,7 +5,7 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/levblanc/golang-restful-api/db"
-	"github.com/levblanc/golang-restful-api/utils/auth"
+	"github.com/levblanc/golang-restful-api/models"
 	"github.com/levblanc/golang-restful-api/utils/response"
 )
 
@@ -13,7 +13,7 @@ import (
 // if not, returns unAuthorized status code
 func Auth(next http.HandlerFunc) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		var session auth.Session
+		var session models.Session
 		var error response.Error
 
 		cookie, err := req.Cookie("mstream-session")

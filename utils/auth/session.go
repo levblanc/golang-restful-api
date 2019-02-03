@@ -5,20 +5,15 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/levblanc/golang-restful-api/db"
+	"github.com/levblanc/golang-restful-api/models"
+	"github.com/rs/xid"
 )
 
-// Session defines data structure of a user session
-type Session struct {
-	Sid          string    `json:"sid" bson:"sid"`
-	Username     string    `json:"username" bson:"username"`
-	LastActivity time.Time `json:"lastActivity" bson:"lastActivity"`
-}
-
 // CreateSession stores user session in db
-func CreateSession(sid string, username string) error {
-	userSession := Session{
+func CreateSession(sid string, userID xid.ID) error {
+	userSession := models.Session{
 		Sid:          sid,
-		Username:     username,
+		UserID:       userID,
 		LastActivity: time.Now(),
 	}
 

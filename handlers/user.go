@@ -161,7 +161,7 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	auth.CreateCookie(w, sid)
 
 	// create session error
-	err = auth.CreateSession(sid, found.Username)
+	err = auth.CreateSession(sid, found.UserID)
 
 	if err != nil {
 		response.SendError(
