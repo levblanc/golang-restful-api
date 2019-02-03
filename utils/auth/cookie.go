@@ -2,18 +2,18 @@ package auth
 
 import (
 	"net/http"
-)
 
-const cookieName = "mstream-session"
+	"github.com/levblanc/golang-restful-api/constants"
+)
 
 // CreateCookie creates a new cookie
 func CreateCookie(w http.ResponseWriter, sid string) {
 	cookie := &http.Cookie{
-		Name:     cookieName,
+		Name:     constants.CookieName,
 		Value:    sid,
 		Path:     "/",
 		HttpOnly: true,
-		MaxAge:   30,
+		MaxAge:   60 * 10,
 	}
 
 	http.SetCookie(w, cookie)
@@ -23,7 +23,7 @@ func CreateCookie(w http.ResponseWriter, sid string) {
 // if cookie exist, returns the cookie
 // else, returns the error
 func ReadCookie(req *http.Request) (*http.Cookie, error) {
-	cookie, err := req.Cookie(cookieName)
+	cookie, err := req.Cookie(constants.CookieName)
 
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func ReadCookie(req *http.Request) (*http.Cookie, error) {
 // ExpireCookie expires target cookie
 func ExpireCookie(w http.ResponseWriter) {
 	cookie := &http.Cookie{
-		Name:   cookieName,
+		Name:   constants.CookieName,
 		Value:  "",
 		Path:   "/",
 		MaxAge: -1,
