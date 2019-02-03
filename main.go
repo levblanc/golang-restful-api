@@ -53,6 +53,8 @@ func main() {
 	router.Handle("/user/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetUser)).Methods("GET")
 	router.Handle("/user/all", middleware.Auth(handlers.GetAllUsers)).Methods("GET")
 	// post handlers
+	router.Handle("/post/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetPost)).Methods("GET")
+	router.Handle("/post/all", middleware.Auth(handlers.GetAllPosts)).Methods("GET")
 	router.Handle("/post/create", middleware.Auth(handlers.CreatePost)).Methods("POST")
 
 	// start server
