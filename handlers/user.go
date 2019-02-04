@@ -18,6 +18,40 @@ import (
 )
 
 // Signup handles sign up requests
+/**
+ *
+ * @api {post} /signup user sign up
+ * @apiName Signup
+ * @apiGroup User
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} username username
+ *
+ * @apiSuccess (200) {string} status success status
+ * @apiSuccess (200) {object} data user data
+ *
+ * @apiParamExample  {type} Request-Example:
+	{
+		"username": "john doe",
+		"password": "123123123"
+	}
+ *
+ *
+ * @apiSuccessExample {type} Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"userId": "bhc4lnh5vl33qmk8p5r0",
+			"username": "john doe",
+			"createdAt": "2019-02-04T22:23:26.06252+08:00",
+			"createdTime": "2019-02-04 22:23:26"
+		}
+	}
+ *
+ *
+*/
 func Signup(w http.ResponseWriter, req *http.Request) {
 	var existUser models.User
 
@@ -96,8 +130,41 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, user)
 }
 
-// Login handles user login process
-// it creates cookie and user session
+/**
+ *
+ * @api {post} /login user login
+ * @apiName Login
+ * @apiGroup User
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} username username
+ * @apiParam  {String} password password
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} success data
+ *
+ * @apiParamExample  Request-Example:
+	{
+		username : "john doe",
+		password: "123123123"
+	}
+ *
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"userId": "bhc4lnh5vl33qmk8p5r0",
+			"username": "john doe",
+			"createdAt": "2019-02-04T14:23:26.062Z",
+			"createdTime": "2019-02-04 22:23:26"
+		}
+	}
+ *
+ *
+*/
 func Login(w http.ResponseWriter, req *http.Request) {
 	var found models.User
 
@@ -184,6 +251,31 @@ func Login(w http.ResponseWriter, req *http.Request) {
 
 // Logout handles user logout
 // expires user cookie and session
+/**
+ *
+ * @api {post} /logout user logout
+ * @apiName Logout
+ * @apiGroup User
+ * @apiVersion  0.1.0
+ *
+ *
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data success data
+ *
+ *
+ *
+ * @apiSuccessExample {Object} Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"message": "Logout success!"
+		}
+	}
+ *
+ *
+*/
 func Logout(w http.ResponseWriter, req *http.Request) {
 	cookie, _ := req.Cookie(constants.CookieName)
 
@@ -209,7 +301,39 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, data)
 }
 
-// GetUser gets user info by user id
+/**
+ *
+ * @api {get} /user/{id} get user by id
+ * @apiName GetUser
+ * @apiGroup User
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} id user id
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data user data
+ *
+ * @apiParamExample  Request-Example:
+	{
+		id : "bhc4lnh5vl33qmk8p5r0"
+	}
+ *
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"userId": "bhc4lnh5vl33qmk8p5r0",
+			"username": "john doe",
+			"createdAt": "2019-02-04T14:23:26.062Z",
+			"createdTime": "2019-02-04 22:23:26"
+		}
+	}
+ *
+ *
+*/
 func GetUser(w http.ResponseWriter, req *http.Request) {
 	var user models.User
 
@@ -243,6 +367,36 @@ func GetUser(w http.ResponseWriter, req *http.Request) {
 }
 
 // GetAllUsers gets all user info
+/**
+ *
+ * @api {get} /user/all get user list
+ * @apiName GetAllUsers
+ * @apiGroup User
+ * @apiVersion  0.1.0
+ *
+ *
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} user list
+ *
+ *
+ *
+ * @apiSuccessExample  Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": [
+			{
+				"userId": "bhc4lnh5vl33qmk8p5r0",
+				"username": "john doe",
+				"createdAt": "2019-02-04T14:23:26.062Z",
+				"createdTime": "2019-02-04 22:23:26"
+			}
+		]
+	}
+ *
+ *
+*/
 func GetAllUsers(w http.ResponseWriter, req *http.Request) {
 	var userList []*models.User
 

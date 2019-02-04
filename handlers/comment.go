@@ -37,7 +37,37 @@ import (
 // 	return list
 // }
 
-// AddComment adds comment to a post by id
+/**
+ * @api {post} /comment/add add comment to a post by id
+ * @apiName AddComment
+ * @apiGroup Comment
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} postId target post id
+ * @apiParam  {String} content comment contents
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data success message
+ *
+ * @apiParamExample  Request-Example:
+	{
+		postId : "bhc5sih5vl33qmk8p5t0",
+		content: "nice writeup!"
+	}
+ *
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status" : "success",
+		"data" : {
+			"message": "Add comment success!"
+		}
+	}
+ *
+ *
+*/
 func AddComment(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 

@@ -17,7 +17,43 @@ import (
 	"github.com/rs/xid"
 )
 
-// CreatePost creates a post record
+/**
+ *
+ * @api {post} /post/create create a post
+ * @apiName CreatePost
+ * @apiGroup Post
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} content post content
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data post data
+ *
+ * @apiParamExample  Request-Example:
+	{
+		content : "my AWESOME post!"
+	}
+ *
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"id": "bhc5sih5vl33qmk8p5t0",
+			"content": "my AWESOME post!",
+			"creatorId": "bhc4lnh5vl33qmk8p5r0",
+			"createdAt": "2019-02-04T23:46:18.156289+08:00",
+			"createdTime": "2019-02-04 23:46:18",
+			"modifiedAt": "2019-02-04T23:46:18.156289+08:00",
+			"modifiedTime": "2019-02-04 23:46:18",
+			"comments": []
+		}
+	}
+ *
+ *
+*/
 func CreatePost(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 
@@ -54,7 +90,44 @@ func CreatePost(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, post)
 }
 
-// GetPost gets single post of target id
+/**
+ *
+ * @api {get} /post/{id} get a post by id
+ * @apiName GetPost
+ * @apiGroup Post
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} id post id
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data post data
+ *
+ * @apiParamExample  Request-Example:
+	{
+		id : "bhc5sih5vl33qmk8p5t0"
+	}
+ *
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"id": "bhc5sih5vl33qmk8p5t0",
+			"content": "my AWESOME post!",
+			"creator": "john doe",
+			"creatorId": "bhc4lnh5vl33qmk8p5r0",
+			"createdAt": "2019-02-04T15:46:18.156Z",
+			"createdTime": "2019-02-04 23:46:18",
+			"modifiedAt": "2019-02-04T15:46:18.156Z",
+			"modifiedTime": "2019-02-04 23:46:18",
+			"comments": []
+		}
+	}
+ *
+ *
+*/
 func GetPost(w http.ResponseWriter, req *http.Request) {
 	var post models.Post
 	var creator models.User
@@ -98,7 +171,48 @@ func GetPost(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, post)
 }
 
-// GetAllPosts gets all post sorted in descending order
+/**
+ *
+ * @api {get} /post/all get post list in descending order
+ * @apiName GetAllPosts
+ * @apiGroup Post
+ * @apiVersion  0.1.0
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data post list
+ *
+ * @apiSuccessExample Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": [
+			{
+				"id": "bhc5vup5vl33qmk8p5u0",
+				"content": "my GREAT GREAT post!",
+				"creator": "john doe",
+				"creatorId": "bhc4lnh5vl33qmk8p5r0",
+				"createdAt": "2019-02-04T15:53:31.474Z",
+				"createdTime": "2019-02-04 23:53:31",
+				"modifiedAt": "2019-02-04T15:53:31.474Z",
+				"modifiedTime": "2019-02-04 23:53:31",
+				"comments": []
+			},
+			{
+				"id": "bhc5sih5vl33qmk8p5t0",
+				"content": "my AWESOME post!",
+				"creator": "john doe",
+				"creatorId": "bhc4lnh5vl33qmk8p5r0",
+				"createdAt": "2019-02-04T15:46:18.156Z",
+				"createdTime": "2019-02-04 23:46:18",
+				"modifiedAt": "2019-02-04T15:46:18.156Z",
+				"modifiedTime": "2019-02-04 23:46:18",
+				"comments": []
+			}
+		]
+	}
+ *
+ *
+*/
 func GetAllPosts(w http.ResponseWriter, req *http.Request) {
 	var postList []*models.Post
 	var creator models.User
@@ -152,7 +266,37 @@ func isPostCreator(w http.ResponseWriter, req *http.Request, id xid.ID) error {
 	return nil
 }
 
-// UpdatePost updates post content by id
+/**
+ *
+ * @api {patch} /post/update update post content by id
+ * @apiName UpdatePist
+ * @apiGroup Post
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} id post id
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data success data
+ *
+ * @apiParamExample   Request-Example:
+	{
+		id : "bhc5vup5vl33qmk8p5u0",
+		content: "my GREAT GREAT GREAT post"
+	}
+ *
+ *
+ * @apiSuccessExample jSuccess-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"message": "Post update success!"
+		}
+	}
+ *
+ *
+*/
 func UpdatePost(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 
@@ -221,7 +365,36 @@ func UpdatePost(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, data)
 }
 
-// DeletePost deletes one post by id
+/**
+ *
+ * @api {delete} /post/delete/{id} delete post by id
+ * @apiName DeletePost
+ * @apiGroup Post
+ * @apiVersion  0.1.0
+ *
+ *
+ * @apiParam  {String} id post id
+ *
+ * @apiSuccess (200) {String} status success status
+ * @apiSuccess (200) {Object} data success data
+ *
+ * @apiParamExample  {type} Request-Example:
+ * {
+ *     id : "bhc5vup5vl33qmk8p5u0"
+ * }
+ *
+ *
+ * @apiSuccessExample {type} Success-Response:
+	HTTP/1.1 200 OK
+	{
+		"status": "success",
+		"data": {
+			"message": "Delete success!"
+		}
+	}
+ *
+ *
+*/
 func DeletePost(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	postID, _ := xid.FromString(params["id"])
