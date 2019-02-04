@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -36,7 +37,6 @@ func CreatePost(w http.ResponseWriter, req *http.Request) {
 		CreatedTime:  format.Time(t),
 		ModifiedAt:   t,
 		ModifiedTime: format.Time(t),
-		IsDeleted:    false,
 		Comments:     []models.Comment{},
 	}
 
@@ -131,4 +131,58 @@ func GetAllPosts(w http.ResponseWriter, req *http.Request) {
 	}
 
 	response.SendData(w, postList)
+}
+
+func isPostCreator(w http.ResponseWriter, req *http.Request, id xid.ID) error {
+	var post models.Post
+
+	creatorID := ctx.Get(req, constants.ContextUserID).(xid.ID)
+
+	err := db.Post.Find(bson.M{"id": id}).One(&post)
+
+	if err != nil {
+		return err
+	}
+
+	if post.CreatorID != creatorID {
+		error := errors.New("not post creator")
+		return error
+	}
+
+	return nil
+}
+
+// DeletePost deletes one post according to id param
+func DeletePost(w http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	postID, _ := xid.FromString(params["id"])
+
+	if err := isPostCreator(w, req, postID); err != nil {
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			err.Error(),
+		)
+
+		return
+	}
+
+	err := db.Post.Remove(bson.M{"id": postID})
+
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			err.Error(),
+		)
+		return
+	}
+
+	data := struct {
+		Message string `json:"message"`
+	}{
+		Message: "Delete success!",
+	}
+
+	response.SendData(w, data)
 }
