@@ -8,13 +8,34 @@ import (
 	"github.com/levblanc/golang-restful-api/constants"
 	"github.com/levblanc/golang-restful-api/db"
 	"github.com/levblanc/golang-restful-api/models"
-
 	"github.com/levblanc/golang-restful-api/utils/ctx"
 	"github.com/levblanc/golang-restful-api/utils/format"
 	"github.com/levblanc/golang-restful-api/utils/response"
 	"github.com/levblanc/golang-restful-api/utils/validator"
 	"github.com/rs/xid"
 )
+
+// func getCommentCreator(list []*models.Comment) []*models.Comment {
+// 	var creator models.User
+// 	var cache = make(map[xid.ID]string)
+
+// 	for _, comment := range list {
+// 		if _, ok := cache[comment.CreatorID]; ok {
+// 			comment.Creator = cache[comment.CreatorID]
+// 		} else {
+// 			err := db.User.Find(bson.M{"id": comment.CreatorID}).One(&creator)
+
+// 			if err != nil {
+// 				cache[comment.CreatorID] = ""
+// 			} else {
+// 				comment.Creator = creator.Username
+// 				cache[comment.CreatorID] = creator.Username
+// 			}
+// 		}
+// 	}
+
+// 	return list
+// }
 
 // AddComment adds comment to a post by id
 func AddComment(w http.ResponseWriter, req *http.Request) {
