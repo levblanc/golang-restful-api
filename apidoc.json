@@ -1,7 +1,12 @@
 {
   "name": "golang-restful-api",
   "version": "0.1.0",
-  "description": "Restful api demo in golang",
+  "description": "Restful api demo in golang. \n  <a href='https://github.com/levblanc/golang-restful-api' target='_blank'>https://github.com/levblanc/golang-restful-api</a>",
   "title": "Golang restful api",
-  "url": ""
+  "url": "",
+  "order": [
+    "User",
+    "Post",
+    "Comment",
+  ]
 }
