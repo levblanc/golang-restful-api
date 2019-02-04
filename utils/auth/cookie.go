@@ -13,7 +13,7 @@ func CreateCookie(w http.ResponseWriter, sid string) {
 		Value:    sid,
 		Path:     "/",
 		HttpOnly: true,
-		MaxAge:   60 * 10,
+		MaxAge:   60 * 30,
 	}
 
 	http.SetCookie(w, cookie)
