@@ -1,0 +1,360 @@
+{
+	"info": {
+		"_postman_id": "b4611be6-a798-49b3-a6bf-73d05a475633",
+		"name": "mstream",
+		"description": "collection of golang restful api demo.\n\nRepo: https://github.com/levblanc/golang-restful-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/signup",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "john doe",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				},
+				"description": "user signup"
+			},
+			"response": []
+		},
+		{
+			"name": "/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "john doe",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				},
+				"description": "user login"
+			},
+			"response": []
+		},
+		{
+			"name": "/logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"logout"
+					]
+				},
+				"description": "user logout"
+			},
+			"response": []
+		},
+		{
+			"name": "/user/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/user/bhc4lnh5vl33qmk8p5r0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"bhc4lnh5vl33qmk8p5r0"
+					]
+				},
+				"description": "get user by id"
+			},
+			"response": []
+		},
+		{
+			"name": "/user/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/user/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"all"
+					]
+				},
+				"description": "get user list"
+			},
+			"response": []
+		},
+		{
+			"name": "/post/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "my AWESOME post!",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/post/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"create"
+					]
+				},
+				"description": "creates a post"
+			},
+			"response": []
+		},
+		{
+			"name": "/post/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/post/bhc5sih5vl33qmk8p5t0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"bhc5sih5vl33qmk8p5t0"
+					]
+				},
+				"description": "get post by id"
+			},
+			"response": []
+		},
+		{
+			"name": "/post/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/post/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"all"
+					]
+				},
+				"description": "get post list"
+			},
+			"response": []
+		},
+		{
+			"name": "/post/update",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "bhc5vup5vl33qmk8p5u0",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "my GREAT GREAT GREAT post",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/post/update",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"update"
+					]
+				},
+				"description": "update post by id"
+			},
+			"response": []
+		},
+		{
+			"name": "/post/delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/post/delete/bhc5vup5vl33qmk8p5u0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"delete",
+						"bhc5vup5vl33qmk8p5u0"
+					]
+				},
+				"description": "delete post by id"
+			},
+			"response": []
+		},
+		{
+			"name": "/comment/add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "postId",
+							"value": "bhc5sih5vl33qmk8p5t0",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "nice writeup!",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/comment/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comment",
+						"add"
+					]
+				},
+				"description": "add comment to target post"
+			},
+			"response": []
+		}
+	]
+}
