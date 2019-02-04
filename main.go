@@ -56,6 +56,7 @@ func main() {
 	router.Handle("/post/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetPost)).Methods("GET")
 	router.Handle("/post/all", middleware.Auth(handlers.GetAllPosts)).Methods("GET")
 	router.Handle("/post/create", middleware.Auth(handlers.CreatePost)).Methods("POST")
+	router.Handle("/post/update", middleware.Auth(handlers.UpdatePost)).Methods("PATCH")
 	router.Handle("/post/delete/{id:[a-z0-9]{20}}", middleware.Auth(handlers.DeletePost)).Methods("DELETE")
 
 	// start server

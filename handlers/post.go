@@ -152,7 +152,76 @@ func isPostCreator(w http.ResponseWriter, req *http.Request, id xid.ID) error {
 	return nil
 }
 
-// DeletePost deletes one post according to id param
+// UpdatePost updates post content by id
+func UpdatePost(w http.ResponseWriter, req *http.Request) {
+	err := req.ParseForm()
+
+	if err != nil || !validator.ValidContentType(req) {
+		response.ReqParamError(w)
+		return
+	}
+
+	postID, err := xid.FromString(req.FormValue("id"))
+
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			err.Error(),
+		)
+		return
+	}
+
+	if err = isPostCreator(w, req, postID); err != nil {
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			err.Error(),
+		)
+
+		return
+	}
+
+	postContent := req.FormValue("content")
+
+	if postContent == "" {
+		response.SendError(
+			w,
+			http.StatusBadRequest,
+			"Update content cannot be empty!",
+		)
+		return
+	}
+
+	t := time.Now()
+	err = db.Post.Update(
+		bson.M{"id": postID},
+		bson.M{"$set": bson.M{
+			"content":      postContent,
+			"modifiedAt":   t,
+			"modifiedTime": format.Time(t),
+		}},
+	)
+
+	if err != nil {
+		response.SendError(
+			w,
+			http.StatusInternalServerError,
+			err.Error(),
+		)
+		return
+	}
+
+	data := struct {
+		Message string `json:"message"`
+	}{
+		Message: "Post update success!",
+	}
+
+	response.SendData(w, data)
+}
+
+// DeletePost deletes one post by id
 func DeletePost(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	postID, _ := xid.FromString(params["id"])
