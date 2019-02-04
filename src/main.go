@@ -44,7 +44,7 @@ func (cors *enableCORS) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 func main() {
 	router := mux.NewRouter()
 	// connect to db
-	db.Connect("mongodb://levblanc:62813058@localhost/", "mstream")
+	db.Connect("mongodb://guest:mstream123123@ds042888.mlab.com:42888/", "mstream")
 
 	// user handlers
 	router.HandleFunc("/signup", handlers.Signup).Methods("POST")
@@ -61,6 +61,7 @@ func main() {
 	// comment handlers
 	router.Handle("/comment/add", middleware.Auth(handlers.AddComment)).Methods("POST")
 
+	log.Println("Server started at: http://127.0.0.1:8080")
 	// start server
 	log.Fatal(http.ListenAndServe(":8080", &enableCORS{router}))
 }
