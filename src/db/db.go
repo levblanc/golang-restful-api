@@ -1,7 +1,7 @@
 package db
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/globalsign/mgo"
 )
@@ -27,7 +27,7 @@ func Connect(url string, dbname string) {
 		panic(err)
 	}
 
-	fmt.Println("Connected to mongodb database:", dbname)
+	log.Println("Connected to mongodb database:", dbname)
 
 	db := dbsession.DB(dbname)
 	User = db.C("user")
