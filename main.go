@@ -58,6 +58,8 @@ func main() {
 	router.Handle("/post/create", middleware.Auth(handlers.CreatePost)).Methods("POST")
 	router.Handle("/post/update", middleware.Auth(handlers.UpdatePost)).Methods("PATCH")
 	router.Handle("/post/delete/{id:[a-z0-9]{20}}", middleware.Auth(handlers.DeletePost)).Methods("DELETE")
+	// comment handlers
+	router.Handle("/comment/add", middleware.Auth(handlers.AddComment)).Methods("POST")
 
 	// start server
 	log.Fatal(http.ListenAndServe(":8080", &enableCORS{router}))
