@@ -7,6 +7,6 @@
   "order": [
     "User",
     "Post",
-    "Comment",
+    "Comment"
   ]
 }
