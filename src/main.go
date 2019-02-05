@@ -50,16 +50,18 @@ func main() {
 	router.HandleFunc("/user/signup", handlers.Signup).Methods("POST")
 	router.HandleFunc("/user/login", handlers.Login).Methods("POST")
 	router.HandleFunc("/user/logout", handlers.Logout).Methods("POST")
-	router.Handle("/user/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetUser)).Methods("GET")
-	router.Handle("/user/all", middleware.Auth(handlers.GetAllUsers)).Methods("GET")
+	router.HandleFunc("/user/{id:[a-z0-9]{20}}", handlers.GetUser).Methods("GET")
+	router.HandleFunc("/user/all", handlers.GetAllUsers).Methods("GET")
 	// post handlers
-	router.Handle("/post/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetPost)).Methods("GET")
-	router.Handle("/post/all", middleware.Auth(handlers.GetAllPosts)).Methods("GET")
-	router.Handle("/post/create", middleware.Auth(handlers.CreatePost)).Methods("POST")
-	router.Handle("/post/update", middleware.Auth(handlers.UpdatePost)).Methods("PATCH")
-	router.Handle("/post/delete/{id:[a-z0-9]{20}}", middleware.Auth(handlers.DeletePost)).Methods("DELETE")
+	router.HandleFunc("/post/{id:[a-z0-9]{20}}", handlers.GetPost).Methods("GET")
+	router.HandleFunc("/post/all", handlers.GetAllPosts).Methods("GET")
+	router.HandleFunc("/post/create", handlers.CreatePost).Methods("POST")
+	router.HandleFunc("/post/update", handlers.UpdatePost).Methods("PATCH")
+	router.HandleFunc("/post/delete/{id:[a-z0-9]{20}}", handlers.DeletePost).Methods("DELETE")
 	// comment handlers
-	router.Handle("/comment/add", middleware.Auth(handlers.AddComment)).Methods("POST")
+	router.HandleFunc("/comment/add", handlers.AddComment).Methods("POST")
+
+	router.Use(middleware.Auth)
 
 	log.Println("Server started at: http://127.0.0.1:8080")
 	// start server

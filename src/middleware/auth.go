@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"regexp"
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/levblanc/golang-restful-api/constants"
@@ -11,10 +12,20 @@ import (
 	"github.com/levblanc/golang-restful-api/utils/response"
 )
 
+func authExclude(path string) bool {
+	match, _ := regexp.MatchString(`^\/user\/(signup|login|logout)$`, path)
+	return match
+}
+
 // Auth checks whether a user's session is valid
 // if not, returns unAuthorized status code
-func Auth(next http.HandlerFunc) http.Handler {
+func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if authExclude(req.URL.Path) {
+			next.ServeHTTP(w, req)
+			return
+		}
+
 		var session models.Session
 		var error response.Error
 
@@ -38,6 +49,6 @@ func Auth(next http.HandlerFunc) http.Handler {
 			return
 		}
 
-		next(w, ctx.Set(req, constants.ContextUserID, session.UserID))
+		next.ServeHTTP(w, ctx.Set(req, constants.ContextUserID, session.UserID))
 	})
 }
