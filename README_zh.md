@@ -1,6 +1,6 @@
 # Golang RESTful Api
 
-(转到 >> [英文说明](https://github.com/levblanc/golang-restful-api/blob/master/README.md))
+(Go To >> [README in English](https://github.com/levblanc/golang-restful-api/blob/master/README.md))
 
 本项目使用 Golang 和 Mongodb，搭建了一套简单的信息流系统的 RESTful API。
 
