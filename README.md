@@ -1,6 +1,6 @@
 # Golang RESTful Api 
 
-(转到 >> [中文说明](https://github.com/levblanc/golang-restful-api/README_zh.md))
+(转到 >> [中文说明](https://github.com/levblanc/golang-restful-api/blob/master/README_zh.md))
 
 This repo is a demo project on building RESTful API of a simple message stream system by using Golang and Mongodb.
 
@@ -10,7 +10,7 @@ Database is hosted on [mLab](https://mlab.com) using a free Sandbox plan which h
 
 Clone this project to your machine and run it through the following instructions. 
 
-[API documentaion](https://github.com/levblanc/golang-restful-api/README.md#api-docs) and [postman collection](https://github.com/levblanc/golang-restful-api/README.md#make-requests-now) are included for your convenience.
+[API documentaion](https://github.com/levblanc/golang-restful-api/blob/master/README.md#api-docs) and [postman collection](https://github.com/levblanc/golang-restful-api/blob/master/README.md#make-request-now) are included for your convenience.
 
 ## Get Started
 
