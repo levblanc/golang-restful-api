@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "/signup",
+			"name": "/user/signup",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -37,12 +37,13 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:8080/signup",
+					"raw": "localhost:8080/user/signup",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"user",
 						"signup"
 					]
 				},
@@ -51,7 +52,7 @@
 			"response": []
 		},
 		{
-			"name": "/login",
+			"name": "/user/login",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -78,12 +79,13 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:8080/login",
+					"raw": "localhost:8080/user/login",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"user",
 						"login"
 					]
 				},
@@ -92,7 +94,7 @@
 			"response": []
 		},
 		{
-			"name": "/logout",
+			"name": "/user/logout",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -101,12 +103,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:8080/logout",
+					"raw": "localhost:8080/user/logout",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"user",
 						"logout"
 					]
 				},
