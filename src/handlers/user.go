@@ -17,10 +17,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Signup handles sign up requests
 /**
  *
- * @api {post} /signup user sign up
+ * @api {post} /user/signup user sign up
  * @apiName Signup
  * @apiGroup User
  * @apiVersion  0.1.0
@@ -132,7 +131,7 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 
 /**
  *
- * @api {post} /login user login
+ * @api {post} /user/login user login
  * @apiName Login
  * @apiGroup User
  * @apiVersion  0.1.0
@@ -249,11 +248,9 @@ func Login(w http.ResponseWriter, req *http.Request) {
 	response.SendData(w, found)
 }
 
-// Logout handles user logout
-// expires user cookie and session
 /**
  *
- * @api {post} /logout user logout
+ * @api {post} /user/logout user logout
  * @apiName Logout
  * @apiGroup User
  * @apiVersion  0.1.0

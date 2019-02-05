@@ -47,9 +47,9 @@ func main() {
 	db.Connect("mongodb://guest:mstream123123@ds042888.mlab.com:42888/", "mstream")
 
 	// user handlers
-	router.HandleFunc("/signup", handlers.Signup).Methods("POST")
-	router.HandleFunc("/login", handlers.Login).Methods("POST")
-	router.HandleFunc("/logout", handlers.Logout).Methods("POST")
+	router.HandleFunc("/user/signup", handlers.Signup).Methods("POST")
+	router.HandleFunc("/user/login", handlers.Login).Methods("POST")
+	router.HandleFunc("/user/logout", handlers.Logout).Methods("POST")
 	router.Handle("/user/{id:[a-z0-9]{20}}", middleware.Auth(handlers.GetUser)).Methods("GET")
 	router.Handle("/user/all", middleware.Auth(handlers.GetAllUsers)).Methods("GET")
 	// post handlers
