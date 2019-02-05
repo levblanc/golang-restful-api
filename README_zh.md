@@ -51,9 +51,17 @@ $ go run -mod=vendor src/main.go
 
 ![api-doc](images/api-doc.png)
 
-## Routes, Cookie and Session
+## User Session and Routes 
 
-项目使用 cookie 进行用户验证。为了方便测试，用户 session 时长设置为**30分钟**。
+项目使用 session-cookie 进行用户验证。为了方便测试，用户 session 时长设置为**30分钟**。
+
+选择 session-cookie 而不是 JWT 的原因很简单：
+
+想用 JWT，在项目里面无脑加一个 package 就行了，
+
+但是我**真的想**自己实现一遍用户验证的流程，
+
+session-cookie 是一个可行的选择。
 
 到目前为止实现了下列的 API: 
 

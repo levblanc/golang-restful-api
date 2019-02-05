@@ -51,11 +51,19 @@ Open `doc/index.html` in your browser and check it out!
 
 ![api-doc](images/api-doc.png)
 
-## Routes, Cookie and Session
+## User Session and Routes 
 
-This project uses cookie for user authorization.
+This project uses session-cookie for user authorization.
 
 For testing purpose, each user session lasts for **30 mins**.
+
+Reason of choosing session-cookie over JWT is simple:
+
+Adding JWT package to the project is easy,
+
+BUT I REALLY want to implement user authorization once by myself.
+
+Session-cookie is my choice.
 
 Here are routes implemented: 
 
