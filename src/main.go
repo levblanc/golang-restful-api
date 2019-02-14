@@ -23,7 +23,7 @@ func (cors *enableCORS) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
 		w.Header().Set(
 			"Access-Control-Allow-Methods",
-			"GET, POST, OPTIONS, PUT, DELETE",
+			"GET, POST, OPTIONS, PUT, PATCH, DELETE",
 		)
 		w.Header().Set(
 			"Access-Control-Allow-Headers",
